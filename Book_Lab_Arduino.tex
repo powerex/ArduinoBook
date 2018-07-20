@@ -1,5 +1,6 @@
-\documentclass[12pt,a4paper]{book}  %Вказівка класу документу
-\usepackage[left=25mm,right=15mm,top=15mm,bottom=15mm]{geometry}  
+\documentclass[12pt,a4paper]{report}  %Вказівка класу документу
+
+\usepackage[left=25mm,right=25mm,top=15mm,bottom=15mm]{geometry}  
 \usepackage[T2A]{fontenc}
 \usepackage[english, ukrainian]{babel}
 
@@ -12,6 +13,7 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{hyperref}
 
 \usepackage{tikz}
 \usepackage{verbatim}
@@ -31,6 +33,13 @@
 
 \input{CodeHighlights.tex}
 \input{SimpleCode.tex}
+
+\setcounter{tocdepth}{3}
+
+\hypersetup{
+    colorlinks=f,
+    pdfborder={0 0 0},
+}
 
 \begin{document}
 
@@ -802,24 +811,20 @@ char message [6] = "hello";
 
 \subsection{Цифрове введення/виведення}
 
-\paragraph{digitalRead()}
+\subsubsection{digitalRead()}
 
 \subparagraph{Опис:}
 
-Reads the value from a specified digital pin, either HIGH or LOW.
-\subparagraph{Синтакс}
-
+Читає значення \code{HIGH} або \code{LOW} з визначеного цифорового піна.
+\subparagraph{Синтакс:}
 \code{digitalRead(pin)}
-\subparagraph{Параметри}
+\subparagraph{Параметри:}
+\code{pin}~-- номер цифрового піна (ціле число) з якого потрібно зчитати дані.
+\subparagraph{Результат виконання:}
+значення \code{HIGH} або \code{LOW}, якщо є чи немає сигнал на вказаному піні відповідно.
 
-pin: the number of the digital pin you want to read
-Returns
-
-HIGH or LOW
-Example Code
-
-Sets pin 13 to the same value as pin 7, declared as an input.
-\begin{lstlisting}[label=conditionoperator,caption=Використання функції digitalRead()]
+Встановлює прочитане значення з піна 13 і зипис цього значення у пін 7.
+\begin{lstlisting}[label=digitalreadwrite,caption=Використання функції digitalRead()]
 int ledPin = 13;   // Світлодіод приєднано до піна 13
 int inPin = 7;     // Кнопка приєнана до цифорового піна 7
 int val = 0;       // Змінна для збереження отриманого значення
@@ -837,41 +842,33 @@ void loop()
 }
 \end{lstlisting}
 
-Notes and Warnings
+\subparagraph{Примітки}
 
-If the pin isn’t connected to anything, digitalRead() can return either HIGH or LOW (and this can change randomly).
+Якщо пін не фізично приєднано то значення функції \code{digitalRead()} може набувати випадкових значеннь \code{HIGH} або \code{LOW}.
 
-The analog input pins can be used as digital pins, referred to as A0, A1, etc.
+Аналогові вхідні контакти можна використовувати як цифрові, які називаються \code{A0}, \code{A1} та ін.
 
-\paragraph{digitalWrite()}
+\subsubsection{digitalWrite()}
 
+\subparagraph{Опис:} Записує значення \code{HIGH} або \code{LOW} до визначеного цифорового піна.
 
-Description
+Якщо пін-код був налаштований як \code{OUTPUT} за допомогою функції \code{pinMode()}, його напруга буде встановленf на відповідне значення: $5$В (або $3.3$В на платах $3.3$В) для значення \code{HIGH}, $0$В (земля) для \code{LOW}.
 
-Write a HIGH or a LOW value to a digital pin.
+Якщо пін налаштований як \code{INPUT}, digitalWrite() активуватиме (\code{HIGH}) або вимкне (\code{LOW}) внутрішню підтяжку на вхідному піні. Рекомендується встановити \code{pinMode()} у значення \code{(INPUT\_PULLUP)} щоб увімкнути внутрішній підтягуючий резистор.
 
-If the pin has been configured as an OUTPUT with pinMode(), its voltage will be set to the corresponding value: 5V (or 3.3V on 3.3V boards) for HIGH, 0V (ground) for LOW.
+Якщо не встановилювати \code{pinMode()} в \code{OUTPUT} і підключили світлодіод до шпильки, під час виклику \code{digitalWrite(HIGH)} світлодіодний індикатор може виглядати затемненим. Без явного встановлення \code{pinMode()}, \code{digitalWrite()} буде активувати внутрішній підтягуючий резистор, який діє як обмежуючий резистор.
 
-If the pin is configured as an INPUT, digitalWrite() will enable (HIGH) or disable (LOW) the internal pullup on the input pin. It is recommended to set the pinMode() to
-\code{INPUTPULLUP} % must be INPUT_PULLUP
-to enable the internal pull-up resistor. See the digital pins tutorial for more information.
+\subparagraph{Синтакс:} \code{digitalWrite(pin, value)}.
+\subparagraph{Параметри:} \code{pin}~-- номер цифрового піна (ціле число) в який потрібно здійснити запис даних.
 
-If you do not set the pinMode() to OUTPUT, and connect an LED to a pin, when calling digitalWrite(HIGH), the LED may appear dim. Without explicitly setting pinMode(), digitalWrite() will have enabled the internal pull-up resistor, which acts like a large current-limiting resistor.
-Syntax
+\code{value}~-- значення \code{HIGH} або \code{LOW}.
+\subparagraph{Результат виконання:} \code{viod} (нічого).
 
-digitalWrite(pin, value)
-Parameters
+\subparagraph{Приклад використання}
 
-pin: the pin number
+Встановлення цифрового піна $13$ в значення \code{OUTPUT} і перемикання значення з \code{HIGH} на \code{LOW} з інтервалом 1с = 1000мс.
 
-value: HIGH or LOW
-Returns
-
-Nothing
-Example Code
-
-The code makes the digital pin 13 an OUTPUT and toggles it by alternating between HIGH and LOW at one second pace.
-
+\begin{lstlisting}[label=digitalwrite,caption=Використання функції digitalWrite()]
 void setup()
 {
   pinMode(13, OUTPUT);          // sets the digital pin 13 as output
@@ -884,13 +881,117 @@ void loop()
   digitalWrite(13, LOW);        // sets the digital pin 13 off
   delay(1000);                  // waits for a second
 }
+\end{lstlisting}
+\subparagraph{Примітки} Аналогові вхідні контакти можна використовувати як цифрові, які називаються \code{A0}, \code{A1} та ін.
 
-Notes and Warnings
+\subsubsection{pinMode()}
 
-The analog input pins can be used as digital pins, referred to as A0, A1, etc.
+\subparagraph{Опис:}
 
+Налаштовує вказаний пін для введення або введення.
+
+Як і в Arduino 1.0.1, можна ввімкнути внутрішні підсилювачі резисторів за допомогою режиму \code{INPUT\_PULLUP}. Крім того, режим \code{INPUT} явно вимикає внутрішні підказки.
+
+\subparagraph{Синтакс:} \code{pinMode(pin, mode)}
+\subparagraph{Параметри:}
+\code{pin}~-- номер піна, режим якого потрібно встановити.
+\code{mode}: \code{INPUT, OUTPUT} або \code{INPUT\_PULLUP}.
+
+\subparagraph{Результат виконання:} \code{viod} (нічого).
+
+\subparagraph{Приклад використання} див. скетч \hyperref[digitalwrite]{\code{digitalwrite()}}.
+
+\subparagraph{Примітки} Аналогові вхідні контакти можна використовувати як цифрові, які називаються \code{A0}, \code{A1} та ін.
 
 \subsection{Аналогове введення/виведення}
+
+\subsubsection{analogRead()}
+
+\subparagraph{Опис:}
+
+Читає значення з вказаного аналогового піна. Плата Arduino містить 6 каналів (8 каналів на Mini і Nano, 16 на Mega), 10-бітний аналого-цифровий перетворювач. Це означає, що він буде перетворювати вхідну напругу від 0 до 5 вольт до цілих значень між 0 і 1023. Це дає роздільну здатність між показниками: 5 вольт / 1024 одиниці або 0.0049 вольт (4,9 мВ) на одиницю. Діапазон введення та роздільну здатність можна змінити за допомогою \hyperref[analogReference]{\code{analogReference()}}.
+
+Для читання аналогового входу потрібно близько 100 мікросекунд (0,0001с), тому максимальна швидкість читання становить близько 10000 разів у секунду.
+
+\subparagraph{Синтакс:} \code{analogRead(pin)}
+ 
+\subparagraph{Параметри:}
+
+\code{pin}~-- номер аналогового вхідного піна для читання. (від 0 до 5 на більшості плат, від 0 до 7 на Mini і Nano, від 0 до 15 на Mega)
+
+\subparagraph{Результат виконання:} ціле число \code{int} (від 0 до 1023).
+
+\subparagraph{Приклад використання}
+
+Зчитуванння і відображення напруги на обраному піні.
+\begin{lstlisting}[label=digitalwrite,caption=Використання функції digitalWrite()]
+int analogPin = 3;     // середня ножка потенціометра приєдана до піна 3
+                       // інші до +5В і землі 0.
+int val = 0;           // змінна для збереження прочитаного значення
+
+void setup()
+{
+  Serial.begin(9600);              //  встановлення серійного порта
+}
+
+void loop()
+{
+  val = analogRead(analogPin);     // зчитування даних з піна
+  Serial.println(val);             // виведення значення
+}
+\end{lstlisting}
+
+\subparagraph{Примітки}
+
+Якщо аналоговий вхідний пін не під'єднано, значення, яке повертає analogRead(), коливається залежно від ряду факторів (наприклад, значень інших аналогових входів, наближення вашої руки до плати тощо).
+
+\subsubsection{analogReference()}\label{analogReference}
+
+\subparagraph{Опис:} Налаштовує опорну напругу, що використовується для аналогового вводу (тобто значення, яке використовується як верхня частина діапазону вхідних даних). Варіанти:
+
+Плати Arduino AVR (Uno, Mega та ін.)
+    \code{DEFAULT}: аналоговий номер за замовчуванням 5 В (на платах Arduino 5V) або 3,3 В (на платах Arduino на 3,3 В)
+
+    \code{INTERNAL}: вбудований довідник, що дорівнює 1.1 вольтам ATmega168 або ATmega328P та 2.56 вольтам ATmega8 (недоступний на Arduino Mega)
+
+    \code{INTERNAL1V1}: вбудований довідник 1.1V (тільки для Arduino Mega)
+
+    \code{INTERNAL2V56}: вбудований довідник 2.56V (тільки для Arduino Mega)
+
+    \code{EXTERNAL}: напруга, накладена на штифт AREF (лише від 0 до 5В), використовується як еталон.
+
+Arduino SAMD Boards (Zero та ін.)
+
+    \code{AR\_DEFAULT}: стандартна аналогова довідка 3,3 В
+
+    \code{AR\_INTERNAL}: вбудований довідник 2,23 В
+
+    \code{AR\_INTERNAL1V0}: вбудований довідник 1.0V
+
+    \code{AR\_INTERNAL1V65}: вбудований довідник 1,65 Вт
+
+    \code{AR\_INTERNAL2V23}: вбудований довідник 2,23 В
+
+    \code{AR\_EXTERNAL}: напруга, застосована до PIN-коду AREF, використовується як еталонна
+
+Arduino SAM Boards (Due)
+
+    \code{AR\_DEFAULT}: стандартна аналогова довідка 3.3В. Це єдиний підтримуваний варіант для Due.
+    
+\subparagraph{Синтакс:} \code{analogReference(type)}
+\subparagraph{Параметри:}
+
+\code{type}~-- тип посилання на використання.
+\subparagraph{Результат виконання:} \code{viod} (нічого).
+
+\subparagraph{Примітки}
+
+Після зміни аналогового посилання, перші декілька показань з \code{analogRead()} можуть бути неточними.
+
+Не використовуйте нічого менше 0В або більше 5В для зовнішньої опорної напруги на піні AREF! Якщо ви використовуєте зовнішнє посилання на пін AREF, перед виконанням \code{analogRead()} слід встановити аналогове посилання на \code{EXTERNAL}. В іншому випадку, ви закоротите активну опорну напругу (внутрішньо сформовану) та пін AREF, що може пошкодити мікроконтроллер на платі Arduino.
+
+Крім того, ви можете підключити зовнішню опорну напругу до піна AREF через резистор 5K, що дозволяє перемикати між зовнішніми та внутрішніми еталонними напругами. Зверніть увагу, що резистор змінить напругу, яка використовується в якості еталона, оскільки на вході AREF є внутрішній 32К резистор. Два виступають в якості дільника напруги, так що, наприклад, 2.5В, застосованого через резистор, дасть $\dfrac{2.5 \cdot 32}{32 + 5} \approx 2.2\text{В}$ на піні AREF.
+
 \subsection{Додаткове введення/виведення}
 \subsection{Робота з часом}
 \subsection{Математичні функції}
@@ -899,6 +1000,11 @@ The analog input pins can be used as digital pins, referred to as A0, A1, etc.
 \subsection{Бітові функції}
 \subsection{Функції комунікації}
 
+
+\subparagraph{Опис:}
+\subparagraph{Синтакс:}
+\subparagraph{Параметри:}
+\subparagraph{Результат виконання:}
 
 \end{document}
 
