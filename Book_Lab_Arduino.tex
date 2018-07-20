@@ -1,6 +1,9 @@
 \documentclass[12pt,a4paper]{report}  %Вказівка класу документу
 
-\usepackage[left=25mm,right=25mm,top=15mm,bottom=15mm]{geometry}  
+\usepackage[left=20mm,right=20mm,top=20mm,bottom=20mm]{geometry}  
+
+\geometry{papersize={18 cm, 29.8 cm}}
+
 \usepackage[T2A]{fontenc}
 \usepackage[english, ukrainian]{babel}
 
@@ -49,6 +52,8 @@ numberstyle=\tiny
 }
 
 \newcommand{\code}{\texttt}
+
+\newcommand{\linkcode}[1]{\hyperef[#1]{\textt{#1}()}}
 
 \maketitle
 
@@ -622,6 +627,149 @@ $ P_H = I^2 \cdot R_{DSon} $
 
 \chapter{Основи роботи з Arduino}
 
+\section{Arduino}
+
+Що таке Arduino?
+
+Arduino - це open-source платформа, яка складається з двох основних частин: самої плати (часто званої мікроконтролер) і програмного забезпечення (спеціальної оболонки для програмування плати) або IDE (Integrated Development Environment). Програмне забезпечення запускається на персональному комп'ютері і дозволяє записувати розроблений вами код на плату.
+Загальна інформація про Arduino
+
+Arduino знайшли особливо сильну популярність серед людей, які тільки починають займатися електронікою. На те є кілька причин. На відміну від більшості попередників, Arduino не вимагає додаткового обладнання (програматора) для завантаження коду на плату - використовується простий USB-кабель. Оболонка для програмування - Arduino IDE використовує спрощену версію C ++, що полегшує процес навчання для новачків. Крім того, Arduino використовує стандартизований форм фактор для більшості своїх плат, завдяки чому з'явився цілий комплект додаткових "Шілд".
+
+Arduino Uno показана на малюнку нижче:
+
+Arduin Uno
+
+Arduino Uno - одна з найпопулярніших плат в лінійці і є відмінним вибором для початківців. Технічні характеристики цієї моделі будуть розглянуті нижче.
+
+Оболонка Arduino IDE:
+
+Arduino IDE
+
+Чи повірите чи ні, але показані на малюнку вище 10 рядків коду достатньо, щоб змусити блимати вбудований на плату світлодіод. Можливо, сам код для вас зараз не дуже зрозумілий, але повірте, він гранично логічний і лаконічний. Після цієї статті і декількох туторіали, вам не складе труднощів його реалізувати самостійно.
+
+У цій статті ми зупинимося на таких основних моментах:
+
+    Які проекти можна реалізувати з Arduino
+    Основні вузли плат Arduino
+    Номенклатура найвдаліших моделей Arduino
+    Додаткові (периферійні) пристрої для Arduino
+
+Рекомендуємо також додатково почитати
+
+Arduino призначена не тільки для вузькоспеціалізованих фахівців. При цьому процес їх освоєння буде набагато легше і приємніше, якщо у вас за плечима базові знання схемотехніки і електротехніки. Рекомендуємо отримати хоча б загальне розуміння перерахованих нижче речей перш ніж заглиблюватися в дивовижний світ Arduino:
+
+    Що таке електрика?
+    Закон Ома
+    Електричний ланцюг
+    Інтегральна схема (мікросхема)
+    аналоговий сигнал
+    цифровий сигнал
+
+Навіщо вам Arduino?
+
+Arduino розроблена для ... Всіх. Так, у всякому разі, заявлено на офіційному сайті компанії. Список приблизно такий: артисти, дизайнери, хакери, програмісти, інженери, для всіх, хто цікавиться розробкою і втіленням інтерактивних проектів. Arduino може взаємодіяти з кнопками, світлодіодами, двигунами, динаміками, GPS-модулями, температуру, камерами, інтернетом і навіть вашим смартфоном або телевізором! Подібна гнучкість в поєднанні з тим, що софт від Arduino - абсолютно безкоштовний, самі плати досить дешеві і легкі в освоєнні привела до появи величезної спільноти шанувальників даної платформи, які викладають власні шматки коду, бібліотеки та інструкції для величезної кількості проектів з використанням Arduino.
+
+Arduino використовуються в якості "мізків" для роботів, 3D принтерів, в системах автоматизованого поливу, світлодіодних кубах, грілках, в системах "розумних будинків" і т.д. Список постійно зростає. Всі проекти і не перерахуєш. Скажімо так: Arduino знаходять застосування практично в будь-якому проекті, де необхідна автоматизація.
+
+Arduino\_Game\_Pad\_Project
+
+І це тільки вершина айсберга. Якщо вам цікаво поглянути на Arduino проекти в дії, ось кілька посилань на хороші ресурси (англійською мовою):
+
+    Instructables
+    Bildr
+    Arduino Playground
+    The ITP Physical Computing Wiki
+    LadyAda
+    Make: Projects
+
+З чого складається плата Arduino?
+
+Випускаються різні моделі Arduino. Кожна з них "заточена" для різних завдань. Деякі плати принципово відрізняються від наведеної на малюнку нижче. Але більшість з них мають такі однакові вузли:
+
+Arduino Uno - опис
+Роз'єм живлення (USB / роз'єм для адаптера)
+
+Кожна плата Arduino повинна приєднуватися до джерела живлення. Arduino Uno може живитися від USB кабелю від вашого персонального комп'ютера Або від окремого адаптера, який підключається до передбаченого на платі роз'єму. На малюнку з'єднання через USB відзначено (1), а роз'єм для зовнішнього джерела живлення - (2).
+
+USB також використовується для завантаження вашої програми (скетчу) на плату.
+
+Примітка! Не використовуйте джерело живлення з напругою на виході більше 20 вольт. Це може привести до того, що ваша плата перегорить. Рекомендоване напруга живлення для Arduino - від 6 до 12 вольт.
+Роз'єми (Піни) (5V, 3.3V, GND, Analog, Digital, PWM, AREF)
+
+Піни на вашій платі Arduino - це передбачені роз'єми, до яких ви будете підключати дроти від периферійних пристроїв (дуже часто для прототипів використовують монтажні плати (макетна плата, макетке) і дроти з коннекторами на кінцях). На Arduino кілька типів пинов, кожен з яких підписаний відповідно до виконуваної функцією.
+
+    GND (3): скорочення від 'Ground' - 'Земля'. На платах кілька пинов GND, кожен з яких може використовуватися для заземлення вашої електричного кола.
+    5V (4) і 3.3V (5): як ви могли вже здогадатися - піти, які на виході забезпечують харчування 5 вольт і 3.3 вольт відповідно. Більшість компонентів, які підключаються до Arduino, благополучно харчуються саме від 5 або 3.3 вольт.
+    Analog (6): на ділянці, який підписаний 'Analog In' (від A0 до A5 на Arduino Uno) розташовані аналогові входи. Ці Піни дозволяють зчитувати сигнали від аналогових датчиків (наприклад, датчик температури) і перетворювати їх в цифрові значення, якими ми надалі оперуємо.
+    Digital (7): навпроти аналогових пинов знаходяться цифрові Піни (від 0 до 13 на Arduino Uno). Ці Піни використовуються для цифрових вхідних (input) сигналів (наприклад, натискання кнопки) і для генерації цифрових вихідних (output) сигналів (наприклад, харчування світлодіода).
+    PWM (8): ви напевно помітили знак (~) поряд з деякими цифровими пинами (3, 5, 6, 9, 10, і 11 на UNO). Ці Піни працюю як в звичайному цифровому режимі, так і в режимі ШІМ-модуляції (PWM). Якщо пояснити коротко - ці Піни можуть імітувати аналоговий вихідний сигнал (наприклад, для поступового згасання світлодіода).
+    AREF (9): Цей пін використовується досить рідко. У деяких випадках це підключають в схему для установки максимального значення напруги на аналогових входах (від 0 до 5 вольт).
+
+Кнопка скидання (Reset Button)
+
+Як і на оригінальних Nintendo, на Arduino є кнопка скидання (reset) (10). При натисканні на неї контакт скидання замикається з землею і код, завантажений на Arduino починає відпрацьовувати заново. Корисна опція, якщо ваш код відпрацьовує без повторів, але ви хочете протестить його роботу.
+Індикатор живлення (Power LED)
+
+Трохи праворуч і нижче написи "UNO" встановлений світлодіод, підписаний "on" (11). Цей світлодіод повинен загорітися, коли ви підключили Arduino до джерела живлення. Якщо світлодіод не зайнявся - поганий знак;).
+Світлодіоди TX і RX
+
+TX - скорочення від transmit (передача), RX - від receive (прийом). Ці умовні позначення часто зустрічаються в електроніці для позначення контактів, які відповідають за серійний обмін даними. На Arduino Uno ці контакти зустрічаються два рази на цифрових пінах 0 і 1 і в якості світлодіодів TX і RX (12). Ці світлодіоди дозволяють візуально відслідковувати, передає або приймає дані Arduino (наприклад, при завантаженні програми на плату).
+Головна інтегральна мікросхема (IC)
+
+Чорна деталь з металевими коннекторами з двох сторін це інтегральна мікросхема, мікропроцесор (IC або Integrated Circuit) (13). Можете сміливо вважати, що це "мізки" нашої Arduino. Цей чіп різний в різних моделях Arduino, але зазвичай він відноситься до лінійки мікропроцесорів ATmega від компанії ATMEL. Це може виявитися важливою інформацією для завантаження скетчу на плату. Модель інтегральної мікросхеми зазвичай вказана на її верхній корпусних частини. Для додаткової інформації про вашу мікросхемі варто звернутися до її даташіту.
+Регулятор напруги
+
+Регулятор напруги (14) is виконує функцію, вказану в назві - контролює напругу, яка надходить на плату Arduino. Можете його собі уявити як охоронця, який не пропускає занадто велика напруга на плату, щоб уникнути її ушкоджень. Звичайно ж, у регулятора є своя межа. Так що живити Arduino напругою більше 20 вольт не можна.
+Номенклатура плат Arduino
+
+Arduino виробляє різні плати, кожна з який має власні особливості. Крім того, Arduino дотримуються моделі open source, завдяки чому інші можуть модифікувати і виробляти клони Arduino, розширювати і змінювати їх функціонал і форм-фактор. Нижче наведені короткі відомості про різні моделі Arduino.
+Arduino Uno (R3)
+
+Arduino Uno - відмінний вибір для початківців. Дуже збалансована плата, на якій є, все, що вам може знадобитися і мінімум зайвого. На платі 14 цифрових пинов, які працюю на вхід і на вихід (6 з них підтримують ШІМ-модуляцію), 6 аналогових входів. Підключається плата за допомогою USB. Є джек для окремого джерела живлення, кнопка скидання і т.п. Для початку роботи з мікро контролером достатньо підключити плату до комп'ютера за допомогою USB кабелю.
+
+Arduino Uno R3
+LilyPad Arduino
+
+Основна плата в лінійки LilyPad Arduino! LilyPad розроблена в першу чергу для використання на одязі. Піни з'єднуються з периферійними пристроями за допомогою струмопровідної нитки. Є купа додаткових плат розширень для LilyPad. Більшість з них спроектовані таким чином, що не бояться вологи.
+
+LilyPad Arduino
+
+Основна плата в лінійки LilyPad Arduino! LilyPad розроблена в першу чергу для використання на одязі. Піни з'єднуються з периферійними пристроями за допомогою струмопровідної нитки. Є купа додаткових плат розширень для LilyPad. Більшість з них спроектовані таким чином, що не бояться вологи.
+
+LilyPad Arduino
+RedBoard
+
+Розробка SparkFun, яка програмується за допомогою USB Mini-B кабелю в оболонці Arduino IDE. Основними перевагами виробник називає: стабільність роботи під ОС Windows 8 завдяки драйверам з необхідною цифровим підписом. На платі використовується чіп USB / FTDI, який менше за габаритами в порівнянні з чіпом на Arduino UNO. Для заливки скетчу на плату в IDE вибирається модель Arduino UNO. Регулятор напруги розрахований на харчування в діапазоні від 7 до 15 вольт.
+
+RedBoard Arduino
+Arduino Mega (R3)
+
+Arduino Mega - немов старший брат Uno. На платі багато (54!) Цифрових входів / виходів (14 з них підтримують ШІМ-модуляцію). Завдяки великій кількості пінів, плата використовується для комплексних проектів, в яких підключається велика кількість периферії (наприклад, сведодіодов або кнопок). Підключення до комп'ютера реалізується таким же кабелем як і на Arduino Uno. Природно, передбачений джек для адаптера.
+
+Arduino Mega
+Arduino Leonardo
+
+Leonardo - перша розробка Arduino, в якій використовується один мікроконтролер із вбудованим USB. Це означає, що плата стає простіше і дешевше. Так як плата підключається безпосередньо до USB без конвертера, є бібліотеки, які дозволяють емулювати комп'ютерну мишу, клавіатуру і багато іншого!
+
+Arduino Leonardo
+Arduino Pro Mini
+
+Arduino Pro Mini - найкращий варіант для ваших проектів, в яких необхідна висока мобільність або кріплення контролера безпосередньо на рухомих вузлах вашого механізму. Повний гайд по використанню плат Arduino Pro Mini можна знайти в цій статті.
+
+Arduino Pro Mini
+Додаткові пристрої для Arduino
+
+Безумовно, Arduino сама по собі вже прекрасна. Але як окремий вузол вона на багато що не здатна. Щось треба до неї підключати. На просторах інтернету величезна кількість туторіали і проектів, з яких ви можете черпати ідеї для своїх проектів. У цій частині ми зробимо невеликий огляд датчиків і Шілд (плат розширень) для Arduino.
+Датчики (сенсори)
+
+За допомогою коротенького коду і Arduino ви можете управляти найширшим спектром датчиків - сенсорів, які дозволяють вимірювати рівень освітленості, температуру, тиск, відстань, силу, вологість, радіоактивність, прискорення і багато іншого. На малюнку нижче наведено кілька з величезної кількості датчиків, сумісних з Arduino:
+
+датчики Arduino
+Шілд (Shields) для Arduino
+
+Крім усього іншого, є така чудова річ як Шілд - по суті це окрема схема живлення, яка має коннектори і сідає на вашу плату Arduino і забезпечує спрощене управління двигунами (Motor Шилд), підключення до інтернету (Ethernet Шилд), радіозв'язок, управління рідкокристалічними і сенсорними екранами і т.д.
+
 \section{Arduino IDE}
 
 \section{Fritzing}
@@ -941,7 +1089,7 @@ void loop()
 }
 \end{lstlisting}
 
-\subparagraph{Примітки}
+\subparagraph{Примітки.}
 
 Якщо аналоговий вхідний пін не під'єднано, значення, яке повертає analogRead(), коливається залежно від ряду факторів (наприклад, значень інших аналогових входів, наближення вашої руки до плати тощо).
 
@@ -984,7 +1132,7 @@ Arduino SAM Boards (Due)
 \code{type}~-- тип посилання на використання.
 \subparagraph{Результат виконання:} \code{viod} (нічого).
 
-\subparagraph{Примітки}
+\subparagraph{Примітки.}
 
 Після зміни аналогового посилання, перші декілька показань з \code{analogRead()} можуть бути неточними.
 
@@ -992,19 +1140,875 @@ Arduino SAM Boards (Due)
 
 Крім того, ви можете підключити зовнішню опорну напругу до піна AREF через резистор 5K, що дозволяє перемикати між зовнішніми та внутрішніми еталонними напругами. Зверніть увагу, що резистор змінить напругу, яка використовується в якості еталона, оскільки на вході AREF є внутрішній 32К резистор. Два виступають в якості дільника напруги, так що, наприклад, 2.5В, застосованого через резистор, дасть $\dfrac{2.5 \cdot 32}{32 + 5} \approx 2.2\text{В}$ на піні AREF.
 
+\subsubsection{analogWrite()}
+
+\subparagraph{Опис:}
+Записує аналогове значення (ШІМ) у обраний пін. Може бути використана для зміни яскравості світіння світлодіодів або для керування двигуном з різною швидкістю. Після виклику \code{analogWrite()}, контакт буде генерувати стійку квадратну хвилю заданого робочого циклу до наступного виклику \code{analogWrite()} (або виклику \code{digitalRead()} або \code{digitalWrite()}) на одному піні. Частота сигналу ШІМ на більшості пінів становить приблизно 490~Гц. На Uno та аналогічних платах контакти 5 та 6 мають частоту приблизно 980~Гц.
+
+На більшості плат Arduino (на базі мікропроцесорів ATmega168 або ATmega328P) ця функція працює на контактах 3, 5, 6, 9, 10 і 11. На Arduino Mega він працює на контактах 2-13 і 44-46. Старіші версії Arduino з ATmega8 підтримують \code{analogWrite()} тільки на пінах 9, 10 і 11.
+Arduino DUE підтримує \code{analogWrite()} на контактах від 2 до 13, а також контактів \code{ХDAC0} та \code{DAC1}. На відміну від шпильки PWM, \code{DAC0} та \code{DAC1} є цифровими аналоговими перетворювачами і служать справжніми аналоговими виходами.
+Не потрібно викликати \code{pinMode()}, щоб встановити PIN-код як вихідний сигнал перед назвою \code{analogWrite()}.
+Функція \code{analogWrite} не має нічого спільного з аналоговими пінами або функцією аналогового читання.
+
+\subparagraph{Синтаксис:} \code{analogWrite(pin, value)}.
+
+\subparagraph{Параметри:}
+\code{pin}~-- пін для запису. Дозволений тип даних: \code{int}.
+
+\code{value}~-- значення від 0 (завжди вимкнено) і 255 (завжди увімкнуто). Дозволені типи даних: \code{int}.
+
+\subparagraph{Результат виконання:} \code{viod} (нічого).
+
+\subparagraph{Приклад використання}
+
+Встановлює вихідний сигнал на світлодіод, пропорційний значенню, прочитаному з потенціометра.
+
+\begin{lstlisting}[label=digitalwrite,caption=analogWrite]	
+int ledPin = 9;      // Світлодіод приєднаний до піна 9
+int analogPin = 3;   // потенціометри приєднано до піра 9
+int val = 0;         // змінна для зберігання прочитаного значення
+
+void setup()
+{
+  pinMode(ledPin, OUTPUT);   // встановити пін у режим виведення
+}
+
+void loop()
+{
+  val = analogRead(analogPin);   // читаємо значення з потенціометра
+  analogWrite(ledPin, val / 4);  // значення прочитане analogRead знаходиться в межах від 0 до 1023, analogWrite дозволяє записувати значення від 0 до 255
+}
+\end{lstlisting}
+
+\subparagraph{Примітки.} Виходи ШІМ, що генеруються на пінах 5 та 6, матимуть більше робочих циклів. Це пов'язано з взаємодією з функціями \code{millis()} і \code{delay()}, які мають такий же внутрішній таймер, який використовується для генерації цих результатів ШІМ. Це буде помічено в основному в налаштуваннях низького циклу робочого циклу (наприклад, 0-10), і це може призвести до значення 0, яке не повністю відключає вихід на пінах 5 і 6.
+
 \subsection{Додаткове введення/виведення}
+
+\subsubsection{noTone()}\label{noTone}
+
+\subparagraph{Опис:} Зупинка генерації квадратної хвилі. Не працює, якщо не попередньо не генерувався тональний сигнал.
+
+\subparagraph{Синтаксис:} \code{noTone(pin)}.
+\subparagraph{Параметри:} \code{pin:}~-- пін, на якому зупиняється генерування тону
+\subparagraph{Результат виконання:} \code{viod} (нічого).
+\subparagraph{Примітки.}
+Якщо ви хочете генерувати різні звуки на декількох пінах, вам потрібно зупинити на одному піні перед тим, як викликати \hyperref[tone]{\code{tone()}} на наступному піні.
+
+\subsubsection{pulseIn()}\label{pulseIn}
+
+\subparagraph{Опис:}
+Читає імпульс (\code{HIGH} або {LOW}) на піні. Наприклад, якщо значення \code{HIGH}, то \code{pulseIn()} чекає, що пін буде переходити від \code{LOW} до \code{HIGH}, потім чекає, що пін буде мати значення \code{LOW} і зупиниться синхронізація. Повертає довжину імпульсу в мікросекундах або скасовується і повертає 0, якщо за певний час не було отримано повного імпульсу.
+
+Терміни цієї функції були визначені емпірично і, ймовірно, відображатимуть помилки у більш довгих імпульсах. Працює з імпульсами від 10~мкс до 3~хвилин.
+
+\subparagraph{Синтакс:}
+
+\code{pulseIn(pin, value)}
+
+\code{pulseIn(pin, value, timeout)}
+
+\subparagraph{Параметри:}
+
+\code{pin}~-- номер піна, на якому потрібно прочитати імпульс. Тип даних \code{int}
+
+\code{value}~-- тип імпульсу для читання: або \code{HIGH}, або \code{LOW}.
+
+\code{timeout} (необов'язково): кількість мікросекунд, що очікує початку пульсу; за замовчуванням - одна секунда. Тип даних \code{unsigned long}.
+
+\subparagraph{Результат виконання:} довжина імпульсу (в мікросекундах) або 0, якщо пульс не стартував до тайм-ауту. Тип даних \code{unsigned long}.
+
+\subparagraph{Приклад використання}
+У прикладі розраховано тривалість часу імпульсу на піні 7.
+
+\begin{lstlisting}[label=digitalwrite,caption=pulseIn]
+int pin = 7;
+unsigned long duration;
+void setup()
+{
+	pinMode(pin, INPUT);
+}
+void loop()
+{
+	duration = pulseIn(pin, HIGH);
+}
+\end{lstlisting}
+
+\subsubsection{pulseInLong()}\label{pulseInLong}
+
+
+Description
+
+pulseInLong() is an alternative to pulseIn() which is better at handling long pulse and interrupt affected scenarios.
+
+Reads a pulse (either HIGH or LOW) on a pin. For example, if value is HIGH, pulseInLong() waits for the pin to go from LOW to HIGH, starts timing, then waits for the pin to go LOW and stops timing. Returns the length of the pulse in microseconds or gives up and returns 0 if no complete pulse was received within the timeout.
+
+The timing of this function has been determined empirically and will probably show errors in shorter pulses. Works on pulses from 10 microseconds to 3 minutes in length. This routine can be used only if interrupts are activated. Furthermore the highest resolution is obtained with large intervals.
+Syntax
+
+pulseInLong(pin, value)
+
+pulseInLong(pin, value, timeout)
+Parameters
+
+pin: the number of the pin on which you want to read the pulse. (int)
+
+value: type of pulse to read: either HIGH or LOW. (int)
+
+timeout (optional): the number of microseconds to wait for the pulse to start; default is one second (unsigned long)
+Returns
+
+the length of the pulse (in microseconds) or 0 if no pulse started before the timeout (unsigned long)
+Example Code
+
+The example calculated the time duration of a pulse on pin 7.
+
+\begin{lstlisting}[label=digitalwrite,caption=pulseInLong]
+int pin = 7;
+unsigned long duration;
+
+void setup() {
+  pinMode(pin, INPUT);
+}
+
+void loop() {
+  duration = pulseInLong(pin, HIGH);
+}
+\end{lstlisting}
+
+Notes and Warnings
+
+This function relies on micros() so cannot be used in noInterrupts() context.
+
+\subsubsection{shiftIn()}\label{shiftIn}
+
+
+Description
+
+Shifts in a byte of data one bit at a time. Starts from either the most (i.e. the leftmost) or least (rightmost) significant bit. For each bit, the clock pin is pulled high, the next bit is read from the data line, and then the clock pin is taken low.
+
+If you’re interfacing with a device that’s clocked by rising edges, you’ll need to make sure that the clock pin is low before the first call to shiftIn(), e.g. with a call to digitalWrite(clockPin, LOW).
+
+Note: this is a software implementation; Arduino also provides an SPI library that uses the hardware implementation, which is faster but only works on specific pins.
+Syntax
+
+byte incoming = shiftIn(dataPin, clockPin, bitOrder)
+Parameters
+
+dataPin: the pin on which to input each bit (int)
+
+clockPin: the pin to toggle to signal a read from dataPin
+
+bitOrder: which order to shift in the bits; either MSBFIRST or LSBFIRST. (Most Significant Bit First, or, Least Significant Bit First)
+Returns
+
+the value read (byte)
+
+
+\subsubsection{shiftOut()}\label{shiftOut}
+
+
+Description
+
+Shifts out a byte of data one bit at a time. Starts from either the most (i.e. the leftmost) or least (rightmost) significant bit. Each bit is written in turn to a data pin, after which a clock pin is pulsed (taken high, then low) to indicate that the bit is available.
+
+Note- if you’re interfacing with a device that’s clocked by rising edges, you’ll need to make sure that the clock pin is low before the call to shiftOut(), e.g. with a call to digitalWrite(clockPin, LOW).
+
+This is a software implementation; see also the SPI library, which provides a hardware implementation that is faster but works only on specific pins.
+Syntax
+
+shiftOut(dataPin, clockPin, bitOrder, value)
+Parameters
+
+dataPin: the pin on which to output each bit (int)
+
+clockPin: the pin to toggle once the dataPin has been set to the correct value (int)
+
+bitOrder: which order to shift out the bits; either MSBFIRST or LSBFIRST. (Most Significant Bit First, or, Least Significant Bit First)
+
+value: the data to shift out. (byte)
+Returns
+
+Nothing
+Example Code
+
+For accompanying circuit, see the tutorial on controlling a 74HC595 shift register.
+
+\begin{lstlisting}[label=digitalwrite,caption=shiftOut]
+//Pin connected to ST_CP of 74HC595
+int latchPin = 8;
+//Pin connected to SH_CP of 74HC595
+int clockPin = 12;
+////Pin connected to DS of 74HC595
+int dataPin = 11;
+
+void setup() {
+  //set pins to output because they are addressed in the main loop
+  pinMode(latchPin, OUTPUT);
+  pinMode(clockPin, OUTPUT);
+  pinMode(dataPin, OUTPUT);
+}
+
+void loop() {
+  //count up routine
+  for (int j = 0; j < 256; j++) {
+    //ground latchPin and hold low for as long as you are transmitting
+    digitalWrite(latchPin, LOW);
+    shiftOut(dataPin, clockPin, LSBFIRST, j);
+    //return the latch pin high to signal chip that it
+    //no longer needs to listen for information
+    digitalWrite(latchPin, HIGH);
+    delay(1000);
+  }
+}
+\end{lstlisting}
+
+Notes and Warnings
+
+The dataPin and clockPin must already be configured as outputs by a call to pinMode().
+
+shiftOut is currently written to output 1 byte (8 bits) so it requires a two step operation to output values larger than 255.
+
+// Do this for MSBFIRST serial
+int data = 500;
+// shift out highbyte
+shiftOut(dataPin, clock, MSBFIRST, (data >> 8));
+// shift out lowbyte
+shiftOut(dataPin, clock, MSBFIRST, data);
+
+// Or do this for LSBFIRST serial
+data = 500;
+// shift out lowbyte
+shiftOut(dataPin, clock, LSBFIRST, data);
+// shift out highbyte
+shiftOut(dataPin, clock, LSBFIRST, (data >> 8));
+
+\subsubsection{tone()}\label{tone}
+
+
+Description
+
+Generates a square wave of the specified frequency (and 50% duty cycle) on a pin. A duration can be specified, otherwise the wave continues until a call to noTone(). The pin can be connected to a piezo buzzer or other speaker to play tones.
+
+Only one tone can be generated at a time. If a tone is already playing on a different pin, the call to tone() will have no effect. If the tone is playing on the same pin, the call will set its frequency.
+
+Use of the tone() function will interfere with PWM output on pins 3 and 11 (on boards other than the Mega).
+
+It is not possible to generate tones lower than 31Hz. For technical details, see Brett Hagman’s notes.
+Syntax
+
+tone(pin, frequency)
+
+tone(pin, frequency, duration)
+Parameters
+
+pin: the pin on which to generate the tone
+
+frequency: the frequency of the tone in hertz - unsigned int
+
+duration: the duration of the tone in milliseconds (optional) - unsigned long
+Returns
+
+Nothing
+Notes and Warnings
+
+If you want to play different pitches on multiple pins, you need to call noTone() on one pin before calling tone() on the next pin.
+
+
 \subsection{Робота з часом}
+
+\subsubsection{delay()}\label{delay()}
+
+
+Description
+
+Pauses the program for the amount of time (in milliseconds) specified as parameter. (There are 1000 milliseconds in a second.)
+Syntax
+
+delay(ms)
+Parameters
+
+ms: the number of milliseconds to pause (unsigned long)
+Returns
+
+Nothing
+Example Code
+
+The code pauses the program for one second before toggling the output pin.
+
+\begin{lstlisting}[label=digitalwrite,caption=delay]
+int ledPin = 13;                 // LED connected to digital pin 13
+
+void setup()
+{
+	pinMode(ledPin, OUTPUT);      // sets the digital pin as output
+}
+
+void loop()
+{
+	digitalWrite(ledPin, HIGH);   // sets the LED on
+	delay(1000);                  // waits for a second
+	digitalWrite(ledPin, LOW);    // sets the LED off
+	delay(1000);                  // waits for a second
+}
+\end{lstlisting}
+
+Notes and Warnings
+
+While it is easy to create a blinking LED with the delay() function, and many sketches use short delays for such tasks as switch debouncing, the use of delay() in a sketch has significant drawbacks. No other reading of sensors, mathematical calculations, or pin manipulation can go on during the delay function, so in effect, it brings most other activity to a halt. For alternative approaches to controlling timing see the millis() function and the sketch sited below. More knowledgeable programmers usually avoid the use of delay() for timing of events longer than 10’s of milliseconds unless the Arduino sketch is very simple.
+
+Certain things do go on while the delay() function is controlling the Atmega chip however, because the delay function does not disable interrupts. Serial communication that appears at the RX pin is recorded, PWM (analogWrite) values and pin states are maintained, and interrupts will work as they should.
+
+
+\subsubsection{delayMicroseconds()}\label{delayMicroseconds}
+
+Description
+
+Pauses the program for the amount of time (in microseconds) specified as parameter. There are a thousand microseconds in a millisecond, and a million microseconds in a second.
+
+Currently, the largest value that will produce an accurate delay is 16383. This could change in future Arduino releases. For delays longer than a few thousand microseconds, you should use delay() instead.
+Syntax
+
+delayMicroseconds(us)
+Parameters
+
+us: the number of microseconds to pause (unsigned int)
+Returns
+
+Nothing
+Example Code
+
+The code configures pin number 8 to work as an output pin. It sends a train of pulses of approximately 100 microseconds period. The approximation is due to execution of the other instructions in the code.
+
+\begin{lstlisting}[label=digitalwrite,caption=delayMicroseconds]
+int outPin = 8;                 // digital pin 8
+
+void setup()
+{
+	pinMode(outPin, OUTPUT);      // sets the digital pin as output
+}
+
+void loop()
+{
+	digitalWrite(outPin, HIGH);   // sets the pin on
+	delayMicroseconds(50);        // pauses for 50 microseconds
+	digitalWrite(outPin, LOW);    // sets the pin off
+	delayMicroseconds(50);        // pauses for 50 microseconds
+}
+\end{lstlisting}
+
+Notes and Warnings
+
+This function works very accurately in the range 3 microseconds and up. We cannot assure that delayMicroseconds will perform precisely for smaller delay-times.
+
+As of Arduino 0018, delayMicroseconds() no longer disables interrupts.
+
+\subsubsection{micros()}\label{micros}
+
+
+Description
+
+Returns the number of microseconds since the Arduino board began running the current program. This number will overflow (go back to zero), after approximately 70 minutes. On 16 MHz Arduino boards (e.g. Duemilanove and Nano), this function has a resolution of four microseconds (i.e. the value returned is always a multiple of four). On 8 MHz Arduino boards (e.g. the LilyPad), this function has a resolution of eight microseconds.
+Syntax
+
+time = micros()
+Parameters
+
+Nothing
+Returns
+
+Returns the number of microseconds since the Arduino board began running the current program.(unsigned long)
+Example Code
+
+The code returns the number of microseconds since the Arduino board began.
+
+\begin{lstlisting}[label=digitalwrite,caption=micros]
+unsigned long time;
+
+void setup(){
+	Serial.begin(9600);
+}
+void loop(){
+	Serial.print("Time: ");
+	time = micros();
+
+	Serial.println(time);  //prints time since program started
+	delay(1000);           // wait a second so as not to send massive amounts of data
+}
+\end{lstlisting}
+
+Notes and Warnings
+
+There are 1000~microseconds in a millisecond and 1,000,000 microseconds in a second.
+
+\subsubsection{millis()}\label{millis}
+
+Description
+
+Returns the number of milliseconds since the Arduino board began running the current program. This number will overflow (go back to zero), after approximately 50 days.
+Syntax
+
+time = millis()
+Parameters
+
+Nothing
+Returns
+
+Number of milliseconds since the program started (unsigned long)
+Example Code
+
+The code reads the milllisecond since the Arduino board began.
+
+\begin{lstlisting}[label=digitalwrite,caption=milis]
+unsigned long time;
+
+void setup(){
+	Serial.begin(9600);
+}
+void loop(){
+	Serial.print("Time: ");
+	time = millis();
+
+	Serial.println(time);    //prints time since program started
+	delay(1000);             // wait a second so as not to send massive amounts of data
+}
+\end{lstlisting}
+
+Notes and Warnings
+
+Please note that the return value for millis() is an unsigned long, logic errors may occur if a programmer tries to do arithmetic with smaller data types such as int’s. Even signed long may encounter errors as its maximum value is half that of its unsigned counterpart.
+
 \subsection{Математичні функції}
-\subsection{Символьні функції}
+
+\subsubsection{abs()}\label{abs}
+
+Description
+
+Calculates the absolute value of a number.
+Syntax
+
+abs(x)
+Parameters
+
+x: the number
+Returns
+
+x: if x is greater than or equal to 0.
+
+-x: if x is less than 0.
+Notes and Warnings
+
+Because of the way the abs() function is implemented, avoid using other functions inside the brackets, it may lead to incorrect results.
+
+abs(a++);   // avoid this - yields incorrect results
+
+abs(a);         // use this instead -
+a++;        // keep other math outside the function
+
+\subsubsection{constrain()}\label{constrain}
+
+Description
+
+Constrains a number to be within a range.
+Syntax
+
+constrain(x, a, b)
+Parameters
+
+x: the number to constrain, all data types a: the lower end of the range, all data types b: the upper end of the range, all data types
+Returns
+
+x: if x is between a and b
+
+a: if x is less than a
+
+b: if x is greater than b
+Example Code
+
+The code limits the sensor values to between 10 to 150.
+
+sensVal = constrain(sensVal, 10, 150);    // limits range of sensor values to between 10 and 150
+
+\subsubsection{map()}\label{map}
+
+Description
+
+Re-maps a number from one range to another. That is, a value of fromLow would get mapped to toLow, a value of fromHigh to toHigh, values in-between to values in-between, etc.
+
+Does not constrain values to within the range, because out-of-range values are sometimes intended and useful. The constrain() function may be used either before or after this function, if limits to the ranges are desired.
+
+Note that the "lower bounds" of either range may be larger or smaller than the "upper bounds" so the map() function may be used to reverse a range of numbers, for example
+
+y = map(x, 1, 50, 50, 1);
+
+The function also handles negative numbers well, so that this example
+
+y = map(x, 1, 50, 50, -100);
+
+is also valid and works well.
+
+The map() function uses integer math so will not generate fractions, when the math might indicate that it should do so. Fractional remainders are truncated, and are not rounded or averaged.
+Syntax
+
+map(value, fromLow, fromHigh, toLow, toHigh)
+Parameters
+
+value: the number to map
+
+fromLow: the lower bound of the value’s current range
+
+fromHigh: the upper bound of the value’s current range
+
+toLow: the lower bound of the value’s target range
+
+toHigh: the upper bound of the value’s target range
+Returns
+
+The mapped value.
+Example Code
+
+/* Map an analog value to 8 bits (0 to 255) */
+void setup() {}
+
+void loop()
+{
+  int val = analogRead(0);
+  val = map(val, 0, 1023, 0, 255);
+  analogWrite(9, val);
+}
+
+Appendix
+
+For the mathematically inclined, here’s the whole function
+
+\begin{lstlisting}[label=digitalwrite,caption='']
+long map(long x, long in_min, long in_max, long out_min, long out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+\end{lstlisting}
+
+\subsubsection{max()}\label{max}
+
+Description
+
+Calculates the maximum of two numbers.
+Syntax
+
+max(x, y)
+Parameters
+
+x: the first number, any data type y: the second number, any data type
+Returns
+
+The larger of the two parameter values.
+Example Code
+
+The code ensures that sensVal is at least 20.
+
+sensVal = max(sensVal, 20); // assigns sensVal to the larger of sensVal or 20
+                           // (effectively ensuring that it is at least 20)
+
+Notes and Warnings
+
+Perhaps counter-intuitively, max() is often used to constrain the lower end of a variable’s range, while min() is used to constrain the upper end of the range.
+
+Because of the way the max() function is implemented, avoid using other functions inside the brackets, it may lead to incorrect results
+
+max(a--, 0);   // avoid this - yields incorrect results
+
+max(a, 0);           // use this instead -
+a--;     // keep other math outside the function
+
+\subsubsection{min()}\label{min}
+
+Description
+
+Calculates the minimum of two numbers.
+Syntax
+
+min(x, y)
+Parameters
+
+x: the first number, any data type
+
+y: the second number, any data type
+Returns
+
+The smaller of the two numbers.
+Example Code
+
+The code ensures that it never gets above 100.
+
+sensVal = min(sensVal, 100); // assigns sensVal to the smaller of sensVal or 100
+                             // ensuring that it never gets above 100.
+
+Notes and Warnings
+
+Perhaps counter-intuitively, max() is often used to constrain the lower end of a variable’s range, while min() is used to constrain the upper end of the range.
+
+Because of the way the min() function is implemented, avoid using other functions inside the brackets, it may lead to incorrect results
+
+min(a++, 100);   // avoid this - yields incorrect results
+
+min(a, 100);
+a++;    // use this instead - keep other math outside the function
+
+\subsubsection{pow()}\label{pow}
+
+Description
+
+Calculates the value of a number raised to a power. Pow() can be used to raise a number to a fractional power. This is useful for generating exponential mapping of values or curves.
+Syntax
+
+pow(base, exponent)
+Parameters
+
+base: the number (float)
+
+exponent: the power to which the base is raised (float)
+Returns
+
+The result of the exponentiation. (double)
+Example Code
+
+See the (fscale) function in the code library.
+
+\subsubsection{sq()}\label{sq}
+
+Description
+
+Calculates the square of a number: the number multiplied by itself.
+Syntax
+
+sq(x)
+Parameters
+
+x: the number, any data type
+Returns
+
+The square of the number. (double)
+
+\subsubsection{sqrt()}\label{sqrt}
+
+Calculates the square root of a number.
+Description
+Syntax
+
+sqrt(x)
+Parameters
+
+x: the number, any data type
+Returns
+
+The number’s square root. (double)
+
+\subsubsection{trigonometry}\label{cos}
+
+cos, sin, tan
+
+Description
+
+Calculates the cosine of an angle (in radians). The result will be between -1 and 1.
+Syntax
+
+cos(rad)
+Parameters
+
+rad: The angle in Radians (float).
+Returns
+
+The cos of the angle (double).
+
 \subsection{Псевдовипадкові числа}
-\subsection{Бітові функції}
+
+\subsubsection{random()}\label{random}
+
+Description
+
+The random function generates pseudo-random numbers.
+Syntax
+
+random(max)
+random(min, max)
+Parameters
+
+min - lower bound of the random value, inclusive (optional)
+
+max - upper bound of the random value, exclusive
+Returns
+
+A random number between min and max-1 (long) .
+Example Code
+
+The code generates random numbers and displays them.
+
+\begin{lstlisting}[label=digitalwrite,caption=random]
+long randNumber;
+
+void setup(){
+	Serial.begin(9600);
+
+	// if analog input pin 0 is unconnected, random analog
+	// noise will cause the call to randomSeed() to generate
+	// different seed numbers each time the sketch runs.
+	// randomSeed() will then shuffle the random function.
+	randomSeed(analogRead(0));
+}
+
+void loop() {
+	// print a random number from 0 to 299
+	randNumber = random(300);
+	Serial.println(randNumber);
+
+	// print a random number from 10 to 19
+	randNumber = random(10, 20);
+	Serial.println(randNumber);
+
+	delay(50);
+}
+\end{lstlisting}
+
+
+Notes and Warnings
+
+If it is important for a sequence of values generated by random() to differ, on subsequent executions of a sketch, use randomSeed() to initialize the random number generator with a fairly random input, such as analogRead() on an unconnected pin.
+
+Conversely, it can occasionally be useful to use pseudo-random sequences that repeat exactly. This can be accomplished by calling randomSeed() with a fixed number, before starting the random sequence.
+
+The max parameter should be chosen according to the data type of the variable in which the value is stored. In any case, the absolute maximum is bound to the long nature of the value generated (32 bit - 2,147,483,647). Setting max to a higher value won’t generate an error during compilation, but during sketch execution the numbers generated will not be as expected.
+
+\subsubsection{randomSeed()}\label{randomSeed}
+
+
+Description
+
+randomSeed() initializes the pseudo-random number generator, causing it to start at an arbitrary point in its random sequence. This sequence, while very long, and random, is always the same.
+
+If it is important for a sequence of values generated by random() to differ, on subsequent executions of a sketch, use randomSeed() to initialize the random number generator with a fairly random input, such as analogRead() on an unconnected pin.
+
+Conversely, it can occasionally be useful to use pseudo-random sequences that repeat exactly. This can be accomplished by calling randomSeed() with a fixed number, before starting the random sequence.
+Parameters
+
+seed - number to initialize the pseudo-random sequence (unsigned long).
+Returns
+
+Nothing
+Example Code
+
+The code explanation required.
+
+\begin{lstlisting}[label=digitalwrite,caption='']
+long randNumber;
+
+void setup(){
+	Serial.begin(9600);
+	randomSeed(analogRead(0));
+}
+
+void loop(){
+	randNumber = random(300);
+	Serial.println(randNumber);
+
+	delay(50);
+}
+\end{lstlisting}
+
 \subsection{Функції комунікації}
 
+\subsubsection{Serial}\label{Serial}
+
+Опис
+
+Використовується для зв'язку між платою Arduino та комп'ютером або іншими пристроями. Всі плати Arduino мають щонайменше один послідовний порт (також відомий як UART або USART): серійний. Він підтримує зв'язок на цифрових контактах 0 (RX) і 1 (TX), а також з комп'ютером через USB. Таким чином, якщо ви користуєтеся цими функціями, ви також не можете використовувати штифти 0 і 1 для цифрового введення або виведення.
+Ви можете використовувати вбудований серійний монітор середовища Arduino для спілкування з платою Arduino. Натисніть кнопку серійного монітора на панелі інструментів та оберіть таку ж швидкість передачі, який використовується для дзвінка, щоб розпочати ().
+
+Послідовний зв'язок на штирях TX / RX використовує рівні логіки TTL (5 В або 3.3 В залежно від плати). Не підключайте ці контакти безпосередньо до послідовного порту RS232; вони працюють на +/- 12 В і можуть пошкодити плату Arduino.
+
+Arduino Mega має три додаткових послідовних порту: Serial1 на штифтах 19 (RX) і 18 (TX), Serial2 на штифтах 17 (RX) і 16 (TX), Serial3 на штифтах 15 (RX) і 14 (TX). Щоб використовувати ці штифти для спілкування з вашим персональним комп'ютером, вам знадобиться додатковий USB-послідовний адаптер, так як він не підключений до USB-послідовного адаптера Mega. Щоб використовувати їх для зв'язку з зовнішнім TTL-послідовним пристроєм, підключіть TX-штифт до шпильки RX вашого пристрою, RX до шпильки TX-пристрою вашого пристрою та підставу мега на землю вашого пристрою.
+
+Arduino DUE має три додаткових 3.3V TTL послідовних портів: Serial1 на штифтах 19 (RX) і 18 (TX); Serial2 на штифтах 17 (RX) і 16 (TX), Serial3 на штифтах 15 (RX) і 14 (TX). Шпильки 0 і 1 також підключені до відповідних штифтів послідовного чіпа USB-to-TTL ATmega16U2, підключеного до порту налагодження USB. Крім того, на своєму чіпі SAM3X є власний USB-послідовний порт, SerialUSB '.
+
+Плата Arduino Leonardo використовує Serial1 для зв'язку через TTL (5V) серійний на контакти 0 (RX) і 1 (TX). Серійний номер зарезервований для зв'язку USB CDC. Для отримання додаткової інформації зверніться до сторінки "Леонардо" про початок роботи та сторінку обладнання.
+
+\subsubsection{stream}\label{stream}
+
+
+Description
+
+Stream is the base class for character and binary based streams. It is not called directly, but invoked whenever you use a function that relies on it.
+
+Stream defines the reading functions in Arduino. When using any core functionality that uses a read() or similar method, you can safely assume it calls on the Stream class. For functions like print(), Stream inherits from the Print class.
+
+Some of the libraries that rely on Stream include :
+
+    Serial
+
+    Wire
+
+    Ethernet
+
+    SD
+
+\subsubsection{Keyboard}\label{Keyboard}
+
+Description
+
+The keyboard functions enable 32u4 or SAMD micro based boards to send keystrokes to an attached computer through their micro’s native USB port.
+
+Note: Not every possible ASCII character, particularly the non-printing ones, can be sent with the Keyboard library.
+The library supports the use of modifier keys. Modifier keys change the behavior of another key when pressed simultaneously. See here for additional information on supported keys and their use.
+Notes and Warnings
+
+These core libraries allow the 32u4 and SAMD based boards (Leonardo, Esplora, Zero, Due and MKR Family) to appear as a native Mouse and/or Keyboard to a connected computer.
+
+A word of caution on using the Mouse and Keyboard libraries: if the Mouse or Keyboard library is constantly running, it will be difficult to program your board. Functions such as Mouse.move() and Keyboard.print() will move your cursor or send keystrokes to a connected computer and should only be called when you are ready to handle them. It is recommended to use a control system to turn this functionality on, like a physical switch or only responding to specific input you can control.
+
+When using the Mouse or Keyboard library, it may be best to test your output first using Serial.print(). This way, you can be sure you know what values are being reported. Refer to the Mouse and Keyboard examples for some ways to handle this.
+Functions
+
+Keyboard.begin()
+Keyboard.end()
+Keyboard.press()
+Keyboard.print()
+Keyboard.println()
+Keyboard.release()
+Keyboard.releaseAll()
+Keyboard.write()
+	
+\subsubsection{Mouse}\label{Mouse} 
+
+Description
+
+The mouse functions enable 32u4 or SAMD micro based boards to control cursor movement on a connected computer through their micro’s native USB port. When updating the cursor position, it is always relative to the cursor’s previous location.
+Notes and Warnings
+
+These core libraries allow the 32u4 and SAMD based boards (Leonardo, Esplora, Zero, Due and MKR Family) to appear as a native Mouse and/or Keyboard to a connected computer.
+
+A word of caution on using the Mouse and Keyboard libraries: if the Mouse or Keyboard library is constantly running, it will be difficult to program your board. Functions such as Mouse.move() and Keyboard.print() will move your cursor or send keystrokes to a connected computer and should only be called when you are ready to handle them. It is recommended to use a control system to turn this functionality on, like a physical switch or only responding to specific input you can control.
+
+When using the Mouse or Keyboard library, it may be best to test your output first using Serial.print(). This way, you can be sure you know what values are being reported. Refer to the Mouse and Keyboard examples for some ways to handle this.
+Functions
+
+Mouse.begin()
+Mouse.click()
+Mouse.end()
+Mouse.move()
+Mouse.press()
+Mouse.release()
+Mouse.isPressed()
 
 \subparagraph{Опис:}
 \subparagraph{Синтакс:}
 \subparagraph{Параметри:}
 \subparagraph{Результат виконання:}
+\subparagraph{Приклад використання}
+\subparagraph{Примітки.}
+
+
+\chapter{Лабораторно-практичні роботи}
+
+\section*{ЛПР№1 [~Світлодіод~]}
+\section*{ЛПР№2 [~Сигналізація~]}
 
 \end{document}
 
