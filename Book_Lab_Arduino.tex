@@ -17,10 +17,14 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{floatrow}
 
 \usepackage{tikz}
 \usepackage{verbatim}
 \usepackage{setspace}
+
+\usepackage{enumitem}
+\setlist[enumerate,itemize]{leftmargin=0pt}%, itemindent=5.7em}
 
 \author{Біляй Юрій Петрович}
 
@@ -42,6 +46,10 @@
 \hypersetup{
     colorlinks=f,
     pdfborder={0 0 0},
+}
+
+\floatsetup[figure]{
+            capbesideposition={bottom},%
 }
 
 \begin{document}
@@ -1235,32 +1243,33 @@ void loop()
 
 \subsubsection{pulseInLong()}\label{pulseInLong}
 
+\subparagraph{Опис:}
 
-Description
+pulseInLong () є альтернативою pulseIn (), що краще при обробці довгих імпульсів і переривань, що зачіпають сценарії.
 
-pulseInLong() is an alternative to pulseIn() which is better at handling long pulse and interrupt affected scenarios.
+Читає імпульс (HIGH або LOW) на шпильці. Наприклад, якщо значення HIGH, pulseInLong () чекає, що штифт буде переходити від LOW до HIGH, починає терміни, а потім чекає, що штифт буде LOW і зупиниться. Повертає довжину імпульсу в мікросекундах або відмовляється і повертає 0, якщо в тайм-аут не було отримано повного імпульсу.
 
-Reads a pulse (either HIGH or LOW) on a pin. For example, if value is HIGH, pulseInLong() waits for the pin to go from LOW to HIGH, starts timing, then waits for the pin to go LOW and stops timing. Returns the length of the pulse in microseconds or gives up and returns 0 if no complete pulse was received within the timeout.
+Час виконання цієї функції був визначений емпіричним способом і, ймовірно, відображатиме помилки в коротших імпульсах. Працює з імпульсами від 10 мкс до 3 хвилин у довжину. Ця процедура може використовуватися лише у тому випадку, якщо активовані переривання. Крім того, найвищу роздільну здатність отримують з великими інтервалами.
 
-The timing of this function has been determined empirically and will probably show errors in shorter pulses. Works on pulses from 10 microseconds to 3 minutes in length. This routine can be used only if interrupts are activated. Furthermore the highest resolution is obtained with large intervals.
-Syntax
+\subparagraph{Синтакс:}
 
-pulseInLong(pin, value)
+\code{pulseInLong(pin, value)}
 
-pulseInLong(pin, value, timeout)
-Parameters
+\code{pulseInLong(pin, value, timeout)}
 
-pin: the number of the pin on which you want to read the pulse. (int)
+\subparagraph{Параметри:}
 
-value: type of pulse to read: either HIGH or LOW. (int)
+\code{pin}~-- номер піна, на якому ви хочете прочитати імпульс. Тип даних \code{int}.
 
-timeout (optional): the number of microseconds to wait for the pulse to start; default is one second (unsigned long)
-Returns
+\code{value}~-- тип імпульсу для читання: або \code{HIGH}, або \code{LOW}. Тип даних \code{int}.
 
-the length of the pulse (in microseconds) or 0 if no pulse started before the timeout (unsigned long)
-Example Code
+\code{timeout} (необов'язковий праметр)~-- кількість мікросекунд, що очікує початку пульсу; за замовчуванням одна секунда. Тип даних \code{unsigned long}.
 
-The example calculated the time duration of a pulse on pin 7.
+\subparagraph{Результат виконання:} довжина імпульсу (в мікросекундах) або 0, якщо пульс не стартував до тайм-ауту. Тип даних \code{unsigned long}.
+
+\subparagraph{Приклад використання}
+
+У прикладі розраховано тривалість часу імпульсу на піні 7.
 
 \begin{lstlisting}[label=digitalwrite,caption=pulseInLong]
 int pin = 7;
@@ -1275,37 +1284,37 @@ void loop() {
 }
 \end{lstlisting}
 
-Notes and Warnings
+\subparagraph{Примітки.}
 
-This function relies on micros() so cannot be used in noInterrupts() context.
+Ця функція спирається на \code{micros()}, тому її не можна використовувати в контексті \code{noInterrupts()}.
 
 \subsubsection{shiftIn()}\label{shiftIn}
 
+\subparagraph{Опис:}
 
-Description
+Зміщення в байті даних один біт одночасно. Починається з найбільшого (тобто найменшого) або найменшого (найменшого) значного біта. Для кожного біта годинник штифт витягується високо, наступний біт читається з лінії передачі даних, а потім годинник шпилька знімається низьким.
 
-Shifts in a byte of data one bit at a time. Starts from either the most (i.e. the leftmost) or least (rightmost) significant bit. For each bit, the clock pin is pulled high, the next bit is read from the data line, and then the clock pin is taken low.
+Якщо ви взаємодієте з пристроєм, який синхронізується за зростаючими краями, перед першим викликом \code{shiftIn()}, наприклад, зателефонувавши до цифрового запису \code{(clockPin, LOW)}.
 
-If you’re interfacing with a device that’s clocked by rising edges, you’ll need to make sure that the clock pin is low before the first call to shiftIn(), e.g. with a call to digitalWrite(clockPin, LOW).
+Примітка: це програмне забезпечення; Arduino також забезпечує бібліотеку \code{SPI}, яка використовує апаратну реалізацію, яка швидше працює, але працює лише на конкретних пінах.
 
-Note: this is a software implementation; Arduino also provides an SPI library that uses the hardware implementation, which is faster but only works on specific pins.
-Syntax
+\subparagraph{Синтаксис:}
 
-byte incoming = shiftIn(dataPin, clockPin, bitOrder)
-Parameters
+\code{byte incoming = shiftIn(dataPin, clockPin, bitOrder)}
 
-dataPin: the pin on which to input each bit (int)
+\subparagraph{Параметри:}
 
-clockPin: the pin to toggle to signal a read from dataPin
+\code{dataPin}~-- пін, на який вводиться кожен біт.  Тип даних \code{int}.
 
-bitOrder: which order to shift in the bits; either MSBFIRST or LSBFIRST. (Most Significant Bit First, or, Least Significant Bit First)
-Returns
+\code{clockPin}~-- пін для перемикання, щоб сигналізувати читання від \code{dataPin}
 
-the value read (byte)
+\code{bitOrder}~-- який порядок переміщення в біти: \code{MSBFIRST} або \code{LSBFIRST}.
 
+\subparagraph{Результат виконання:} 
+
+Прочитане значення. Тип даних \code{byte}.
 
 \subsubsection{shiftOut()}\label{shiftOut}
-
 
 Description
 
@@ -2007,8 +2016,60 @@ Mouse.isPressed()
 
 \chapter{Лабораторно-практичні роботи}
 
-\section*{ЛПР№1 [~Світлодіод~]}
-\section*{ЛПР№2 [~Сигналізація~]}
+\section{ЛПР№1 [~Світлодіод~]}
+
+\paragraph{Необхідні компоненти:} \textbf{~}\\
+
+\begin{minipage}{0.45\textwidth}
+
+\begin{spacing}{0.5}
+\begin{itemize}
+\item плата Arduino Uno;
+\item світлодіод;
+\end{itemize}
+\end{spacing}
+
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+
+\begin{spacing}{0.5}
+\begin{itemize}
+\item резистор на $220\text{~Ом}$;
+\item з'єднувальні дроти.
+\end{itemize}
+\end{spacing}
+
+\end{minipage}
+
+\begin{figure}[h!]
+\caption{Розташування елементів}
+\center{\includegraphics[height=3.5in]{lab_img/001_SimpleBlink.png}}
+\label{ris:image}
+\end{figure}
+
+\begin{lstlisting}[label=lab01ex01,caption=Програмний код]
+int LED = 13;
+
+void setup() {
+	pinMode(LED, OUTPUT);
+}
+
+void loop() {
+	digitalWrite(LED, HIGH);
+	delay(1000);
+	digitalWrite(LED, LOW);
+	delay(1000);	
+}
+\end{lstlisting}
+
+\begin{figure}[h!]
+\caption{Схема підключення}
+\center{\includegraphics[height=4in]{lab_img/001_SimpleBlink_s.png}}
+\label{ris:image}
+\end{figure}
+
+\section{ЛПР№2 [~Сигналізація~]}
 
 \end{document}
 
