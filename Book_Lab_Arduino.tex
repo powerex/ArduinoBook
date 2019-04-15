@@ -1292,7 +1292,7 @@ void loop() {
 
 \subparagraph{Опис:}
 
-Зміщення в байті даних один біт одночасно. Починається з найбільшого (тобто найменшого) або найменшого (найменшого) значного біта. Для кожного біта годинник штифт витягується високо, наступний біт читається з лінії передачі даних, а потім годинник шпилька знімається низьким.
+Зміщення в байті даних один біт. Починається з найбільшого (тобто найменшого) або найменшого (найменшого) значного біта. Для кожного біта годинник штифт витягується високо, наступний біт читається з лінії передачі даних, а потім годинник шпилька знімається низьким.
 
 Якщо ви взаємодієте з пристроєм, який синхронізується за зростаючими краями, перед першим викликом \code{shiftIn()}, наприклад, зателефонувавши до цифрового запису \code{(clockPin, LOW)}.
 
@@ -1306,7 +1306,7 @@ void loop() {
 
 \code{dataPin}~-- пін, на який вводиться кожен біт.  Тип даних \code{int}.
 
-\code{clockPin}~-- пін для перемикання, щоб сигналізувати читання від \code{dataPin}
+\code{clockPin}~-- пін для перемикання, щоб сигналізувати читання від \code{dataPin}.
 
 \code{bitOrder}~-- який порядок переміщення в біти: \code{MSBFIRST} або \code{LSBFIRST}.
 
@@ -1316,55 +1316,51 @@ void loop() {
 
 \subsubsection{shiftOut()}\label{shiftOut}
 
-Description
+\subparagraph{Опис:}
 
-Shifts out a byte of data one bit at a time. Starts from either the most (i.e. the leftmost) or least (rightmost) significant bit. Each bit is written in turn to a data pin, after which a clock pin is pulsed (taken high, then low) to indicate that the bit is available.
+Зміщення в байті даних на один біт. Зміщення відбувається більшого (крайнього лівого) або найменш значущого біта.
 
-Note- if you’re interfacing with a device that’s clocked by rising edges, you’ll need to make sure that the clock pin is low before the call to shiftOut(), e.g. with a call to digitalWrite(clockPin, LOW).
+\subparagraph{Синтаксис:}
 
-This is a software implementation; see also the SPI library, which provides a hardware implementation that is faster but works only on specific pins.
-Syntax
+\code{shiftOut(dataPin, clockPin, bitOrder, value)}
 
-shiftOut(dataPin, clockPin, bitOrder, value)
-Parameters
+\subparagraph{Параметри:}
 
-dataPin: the pin on which to output each bit (int)
+\code{dataPin}~-- пін, на який вводиться кожен біт.  Тип даних \code{int}.
 
-clockPin: the pin to toggle once the dataPin has been set to the correct value (int)
+\code{clockPin}~-- пін для перемикання, щоб сигналізувати читання від \code{dataPin}
 
-bitOrder: which order to shift out the bits; either MSBFIRST or LSBFIRST. (Most Significant Bit First, or, Least Significant Bit First)
+\code{bitOrder}~-- який порядок переміщення в біти: \code{MSBFIRST} або \code{LSBFIRST}.
 
-value: the data to shift out. (byte)
-Returns
+\code{value}~-- дані для зміщення. Тип даних \code{byte}.
 
-Nothing
-Example Code
+\subparagraph{Результат виконання:} 
 
-For accompanying circuit, see the tutorial on controlling a 74HC595 shift register.
+\code{viod} (нічого).
+
+\subparagraph{Приклад використання}
+
+Приклад роботи зі схемою управління рігістрами 74HC595.
 
 \begin{lstlisting}[label=digitalwrite,caption=shiftOut]
-//Pin connected to ST_CP of 74HC595
+//Пін приєднаний до ST_CP схеми 74HC595
 int latchPin = 8;
-//Pin connected to SH_CP of 74HC595
+//Пін приєднаний до SH_CP схеми 74HC595
 int clockPin = 12;
-////Pin connected to DS of 74HC595
+//Пін приєднаний до DS схеми 74HC595
 int dataPin = 11;
 
 void setup() {
-  //set pins to output because they are addressed in the main loop
+  //встановлення пінів у резим виведення
   pinMode(latchPin, OUTPUT);
   pinMode(clockPin, OUTPUT);
   pinMode(dataPin, OUTPUT);
 }
 
 void loop() {
-  //count up routine
   for (int j = 0; j < 256; j++) {
-    //ground latchPin and hold low for as long as you are transmitting
     digitalWrite(latchPin, LOW);
     shiftOut(dataPin, clockPin, LSBFIRST, j);
-    //return the latch pin high to signal chip that it
-    //no longer needs to listen for information
     digitalWrite(latchPin, HIGH);
     delay(1000);
   }

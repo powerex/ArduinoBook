@@ -45,30 +45,30 @@
 \BOOKMARK [3][-]{section*.92}{pulseInLong\(\)}{subsection.3.3.3}% 45
 \BOOKMARK [3][-]{section*.99}{shiftIn\(\)}{subsection.3.3.3}% 46
 \BOOKMARK [3][-]{section*.104}{shiftOut\(\)}{subsection.3.3.3}% 47
-\BOOKMARK [3][-]{section*.105}{tone\(\)}{subsection.3.3.3}% 48
+\BOOKMARK [3][-]{section*.110}{tone\(\)}{subsection.3.3.3}% 48
 \BOOKMARK [2][-]{subsection.3.3.4}{ \040}{section.3.3}% 49
-\BOOKMARK [3][-]{section*.106}{delay\(\)}{subsection.3.3.4}% 50
-\BOOKMARK [3][-]{section*.107}{delayMicroseconds\(\)}{subsection.3.3.4}% 51
-\BOOKMARK [3][-]{section*.108}{micros\(\)}{subsection.3.3.4}% 52
-\BOOKMARK [3][-]{section*.109}{millis\(\)}{subsection.3.3.4}% 53
+\BOOKMARK [3][-]{section*.111}{delay\(\)}{subsection.3.3.4}% 50
+\BOOKMARK [3][-]{section*.112}{delayMicroseconds\(\)}{subsection.3.3.4}% 51
+\BOOKMARK [3][-]{section*.113}{micros\(\)}{subsection.3.3.4}% 52
+\BOOKMARK [3][-]{section*.114}{millis\(\)}{subsection.3.3.4}% 53
 \BOOKMARK [2][-]{subsection.3.3.5}{ }{section.3.3}% 54
-\BOOKMARK [3][-]{section*.110}{abs\(\)}{subsection.3.3.5}% 55
-\BOOKMARK [3][-]{section*.111}{constrain\(\)}{subsection.3.3.5}% 56
-\BOOKMARK [3][-]{section*.112}{map\(\)}{subsection.3.3.5}% 57
-\BOOKMARK [3][-]{section*.113}{max\(\)}{subsection.3.3.5}% 58
-\BOOKMARK [3][-]{section*.114}{min\(\)}{subsection.3.3.5}% 59
-\BOOKMARK [3][-]{section*.115}{pow\(\)}{subsection.3.3.5}% 60
-\BOOKMARK [3][-]{section*.116}{sq\(\)}{subsection.3.3.5}% 61
-\BOOKMARK [3][-]{section*.117}{sqrt\(\)}{subsection.3.3.5}% 62
-\BOOKMARK [3][-]{section*.118}{trigonometry}{subsection.3.3.5}% 63
+\BOOKMARK [3][-]{section*.115}{abs\(\)}{subsection.3.3.5}% 55
+\BOOKMARK [3][-]{section*.116}{constrain\(\)}{subsection.3.3.5}% 56
+\BOOKMARK [3][-]{section*.117}{map\(\)}{subsection.3.3.5}% 57
+\BOOKMARK [3][-]{section*.118}{max\(\)}{subsection.3.3.5}% 58
+\BOOKMARK [3][-]{section*.119}{min\(\)}{subsection.3.3.5}% 59
+\BOOKMARK [3][-]{section*.120}{pow\(\)}{subsection.3.3.5}% 60
+\BOOKMARK [3][-]{section*.121}{sq\(\)}{subsection.3.3.5}% 61
+\BOOKMARK [3][-]{section*.122}{sqrt\(\)}{subsection.3.3.5}% 62
+\BOOKMARK [3][-]{section*.123}{trigonometry}{subsection.3.3.5}% 63
 \BOOKMARK [2][-]{subsection.3.3.6}{ }{section.3.3}% 64
-\BOOKMARK [3][-]{section*.119}{random\(\)}{subsection.3.3.6}% 65
-\BOOKMARK [3][-]{section*.120}{randomSeed\(\)}{subsection.3.3.6}% 66
+\BOOKMARK [3][-]{section*.124}{random\(\)}{subsection.3.3.6}% 65
+\BOOKMARK [3][-]{section*.125}{randomSeed\(\)}{subsection.3.3.6}% 66
 \BOOKMARK [2][-]{subsection.3.3.7}{ }{section.3.3}% 67
-\BOOKMARK [3][-]{section*.121}{Serial}{subsection.3.3.7}% 68
-\BOOKMARK [3][-]{section*.122}{stream}{subsection.3.3.7}% 69
-\BOOKMARK [3][-]{section*.123}{Keyboard}{subsection.3.3.7}% 70
-\BOOKMARK [3][-]{section*.124}{Mouse}{subsection.3.3.7}% 71
+\BOOKMARK [3][-]{section*.126}{Serial}{subsection.3.3.7}% 68
+\BOOKMARK [3][-]{section*.127}{stream}{subsection.3.3.7}% 69
+\BOOKMARK [3][-]{section*.128}{Keyboard}{subsection.3.3.7}% 70
+\BOOKMARK [3][-]{section*.129}{Mouse}{subsection.3.3.7}% 71
 \BOOKMARK [0][-]{chapter.4}{- }{}% 72
 \BOOKMARK [1][-]{section.4.1}{1 [ \040]}{chapter.4}% 73
 \BOOKMARK [1][-]{section.4.2}{2 [ \040]}{chapter.4}% 74
